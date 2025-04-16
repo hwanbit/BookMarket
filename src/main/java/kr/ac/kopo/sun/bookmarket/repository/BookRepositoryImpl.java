@@ -19,7 +19,7 @@ public class BookRepositoryImpl implements BookRepository {
         book1.setAuthor("Miyoung Song");
         book1.setDescription("All about Spring Boot!");
         book1.setPublisher("gilbut");
-        book1.setCategory("IT");
+        book1.setCategory("Framework");
         book1.setUnitsInStock(1000);
         book1.setReleaseDate("2024/12/31");
         book1.setCondition("New");
@@ -33,7 +33,7 @@ public class BookRepositoryImpl implements BookRepository {
         book2.setAuthor("Sehong Park");
         book2.setDescription("Everyone needs Java~");
         book2.setPublisher("Hanbit");
-        book2.setCategory("IT");
+        book2.setCategory("Language");
         book2.setUnitsInStock(500);
         book2.setReleaseDate("2021/10/29");
         book2.setCondition("Used");
@@ -47,7 +47,7 @@ public class BookRepositoryImpl implements BookRepository {
         book3.setAuthor("Jaenam Woo");
         book3.setDescription("Android Studio = Android Programming");
         book3.setPublisher("Hanbit");
-        book3.setCategory("IT");
+        book3.setCategory("Framework");
         book3.setUnitsInStock(700);
         book3.setReleaseDate("2024/01/19");
         book3.setCondition("New");
@@ -74,5 +74,16 @@ public class BookRepositoryImpl implements BookRepository {
             throw new IllegalArgumentException("도서번호: " + bookId + "의 도서를 찾을 수 없습니다.");
         }
         return bookInfo;
+    }
+
+    @Override
+    public List<Book> getBookListByCategory(String category) {
+        List<Book> booksByCategory = new ArrayList<>();
+        for(Book book : listOfBooks) {
+            if (book.getCategory() != null && book.getCategory().equals(category)) {
+                booksByCategory.add(book);
+            }
+        }
+        return booksByCategory;
     }
 }
