@@ -12,8 +12,8 @@ public class ResourceConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/BookMarket/images/**")
-                .addResourceLocations("classpath:file:///" + fileDir)
-                .setCachePeriod(60 * 60 * 24 * 365); //접근 파일 캐싱 시간을 설정(단위: ms)
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("file:///" + fileDir)
+                .setCachePeriod(60 * 60 * 24 * 365); //접근 파일 캐싱 시간을 설정(단위: 초)
     }
 }
