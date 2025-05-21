@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import kr.ac.kopo.sun.bookmarket.domain.Book;
 import kr.ac.kopo.sun.bookmarket.service.BookService;
+import kr.ac.kopo.sun.bookmarket.validator.BookValidator;
+import kr.ac.kopo.sun.bookmarket.validator.UnitsInStockValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,12 @@ import java.util.Set;
 public class BookController {
     @Autowired
     private BookService bookService;
+
+//    @Autowired
+//    private UnitsInStockValidator unitsInStockValidator;
+
+    @Autowired
+    private BookValidator bookValidator;
 
     @Value("${file.uploadDir}")
     String fileDir;
@@ -126,6 +134,8 @@ public class BookController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
+//        binder.setValidator(unitsInStockValidator);
+        binder.setValidator(bookValidator);
         binder.setAllowedFields("bookId", "name", "unitPrice", "author", "description", "publisher", "category", "unitsInStock", "releaseDate", "condition", "bookImage");
     }
 }
