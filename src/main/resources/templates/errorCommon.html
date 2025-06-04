@@ -25,12 +25,15 @@
         <div class="p-5 mb-4 bg-body-tertiary rounded-3">
             <div class="container-fluid py-5">
                 <h2 class="alert alert-danger">
-                    해당 도서 카테고리가 존재하지 않습니다.
+                    해당 도서 카테고리가 존재하지 않습니다.<br>
+                    도서 분야: [[${category}]]
                 </h2>
             </div>
         </div>
 
         <div class="row align-items-md-stretch">
+            <p>[[${url}]]</p>
+            <p>[[${errorMessage}]]</p>
             <p>[[${exception}]]</p>
             <p><a href="/BookMarket/books" class="btn btn-secondary" role="button">도서목록 &raquo;</a></p>
         </div>
