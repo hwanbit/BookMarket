@@ -25,4 +25,9 @@ public class CartServiceImple implements CartService {
     public void update(String cartId, Cart cart) {
         cartRepository.update(cartId, cart);
     }
+
+    @Override
+    public void delete(String cartId) {
+        cartRepository.delete(cartId);
+    }
 }

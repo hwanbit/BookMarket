@@ -36,4 +36,12 @@ public class CartRepositoryImpl implements CartRepository {
         }
         listOfCarts.put(cartId, cart);
     }
+
+    @Override
+    public void delete(String cartId) {
+        if (!listOfCarts.containsKey(cartId)) {
+            throw new IllegalArgumentException("Cart can't be updated. Because a cart doesn't exist.");
+        }
+        listOfCarts.remove(cartId);
+    }
 }
