@@ -24,4 +24,25 @@ public class Cart {
         this();
         this.cartId = cartId;
     }
+
+    public void addCartItem(CartItem item) {
+        String bookId = item.getBook().getBookId();
+
+        if (cartItems.containsKey(bookId)) {
+            CartItem cartItem = cartItems.get(bookId);
+            cartItem.setQuantity(cartItem.getQuantity() + item.getQuantity());
+            cartItems.put(bookId, cartItem);
+        } else {
+            cartItems.put(bookId, item);
+        }
+        updateGrandTotal();
+    }
+    
+    // 전체 주문 총액을 업데이트하는 메소드
+    public void updateGrandTotal() {
+        BigDecimal total = new BigDecimal(0);
+        for (CartItem cartItem : cartItems.values()) {
+            grandTotal = grandTotal.add(cartItem.getTotalPrice());
+        }
+    }
 }

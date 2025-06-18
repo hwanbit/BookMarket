@@ -11,11 +11,18 @@ public class CartServiceImple implements CartService {
     @Autowired
     private CartRepository cartRepository;
 
+    @Override
     public Cart create(Cart cart) {
         return cartRepository.create(cart);
     }
 
+    @Override
     public Cart read(String cartId) {
         return cartRepository.read(cartId);
+    }
+
+    @Override
+    public void update(String cartId, Cart cart) {
+        cartRepository.update(cartId, cart);
     }
 }
