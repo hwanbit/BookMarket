@@ -31,6 +31,8 @@ public class OrderController {
 
     @Autowired
     private OrderProService orderProService;
+    @Autowired
+    private BookService bookService;
 
     //	@Autowired
     //   private BookService bookService;
@@ -114,5 +116,74 @@ public class OrderController {
             session.invalidate();
         }
         return "orderCancelled";
+    }
+
+    @GetMapping("/list")
+    public String viewHomePage(Model model) {
+        return viewPage(1, "orderId", "asc", model);
+    }
+
+    @GetMapping("/page")
+    public String viewPage(@RequestParam("pageNum") int pageNum, @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, Model model) {
+        Page<Order> page = orderProService.listAll(pageNum, sortField, sortDir);
+        List<Order> listOrders = page.getContent();
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+        model.addAttribute("orderList", listOrders);
+        return "orderList";
+    }
+
+    @GetMapping("/view/{id}")
+    public ModelAndView viewOrder(@PathVariable(value = "id") Long id) {
+        Order order = orderProService.get(id);
+        List<Book> listOfBooks = new ArrayList<Book>();
+        for (OrderItem orderItem : order.getOrderItems().values()) {
+            String bookId = orderItem.getBookId();
+            Book book = bookService.getBookById(bookId);
+            listOfBooks.add(book);
+        }
+        ModelAndView modelAndView = new ModelAndView("orderView");
+        modelAndView.addObject("order", order);
+        modelAndView.addObject("listOfBooks", listOfBooks);
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView showEditOrder(@PathVariable(value = "id") Long id) {
+        Order order = orderProService.get(id);
+        List<Book> listOfBooks = new ArrayList<Book>();
+        for (OrderItem orderItem : order.getOrderItems().values()) {
+            String bookId = orderItem.getBookId();
+            Book book = bookService.getBookById(bookId);
+            listOfBooks.add(book);
+        }
+        ModelAndView modelAndView = new ModelAndView("orderEdit");
+        modelAndView.addObject("order", order);
+        modelAndView.addObject("bookList", listOfBooks);
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteOrder(@PathVariable(value = "id") Long id) {
+        orderProService.delete(id);
+        return "redirect:/order/list";
+    }
+
+    @GetMapping("/deleteAll")
+    public String deleteAll() {
+        orderProService.deleteAll();
+        return "redirect:/order/list";
+    }
+
+    @PostMapping("/save")
+    public String saveProduct(@ModelAttribute Order order) {
+        Order saveOrder = orderProService.get(order.getOrderId());
+        saveOrder.setShipping(order.getShipping());
+        orderProService.save(saveOrder);
+        return "redirect:/order/list";
     }
 }
