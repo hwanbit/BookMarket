@@ -40,10 +40,11 @@ public class Cart {
     
     // 전체 주문 총액을 업데이트하는 메소드
     public void updateGrandTotal() {
-        BigDecimal total = new BigDecimal(0);
+        BigDecimal total = BigDecimal.ZERO;
         for (CartItem cartItem : cartItems.values()) {
-            grandTotal = grandTotal.add(cartItem.getTotalPrice());
+            total = total.add(cartItem.getTotalPrice());
         }
+        grandTotal = total;
     }
 
     public void removeCartItem(CartItem item) {
