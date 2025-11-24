@@ -24,7 +24,9 @@
         <a href="/BookMarket/board/list" class="nav-link">게시판 &nbsp;|&nbsp;</a>
         <a sec:authorize="isAnonymous()" href="/BookMarket/members/add" class="nav-link">회원가입 &nbsp;|&nbsp;</a>
         <a sec:authorize="isAnonymous()" href="/BookMarket/login" class="nav-link">로그인 &nbsp;|&nbsp;</a>
-        <a sec:authorize="isAuthenticated()" th:href="'/BookMarket/members/update/'+${session.userLoginInfo.memberId}" class="nav-link">회원수정 &nbsp;|&nbsp;</a>
+        <a sec:authorize="isAuthenticated()"
+           th:href="@{/BookMarket/members/update/{id}(id=${#authentication.name})}"
+           class="nav-link">회원수정 &nbsp;|&nbsp;</a>
         <a sec:authorize="isAuthenticated()" href="/BookMarket/logout" class="nav-link">로그아웃 &nbsp;|&nbsp;</a>
         <b sec:authorize="isAuthenticated()"><span sec:authentication="name"></span>님</b>
     </div>
