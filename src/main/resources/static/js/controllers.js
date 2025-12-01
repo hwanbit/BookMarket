@@ -6,7 +6,7 @@ function addToCart(bookId) {
 }
 
 function removeFromCart(bookId, cartId) {
-    document.removeForm.action = "/BookMarket/cart/book" + bookId;
+    document.removeForm.action = "/BookMarket/cart/book/" + bookId;
     document.removeForm.submit();
     setTimeout('location.reload()', 10);
 }

@@ -104,7 +104,9 @@ public class OrderController {
         model.addAttribute("order",order);
         HttpSession session = request.getSession(false);
         if(session != null) {
-            session.invalidate();
+            String cartId = session.getId();
+            cartService.delete(cartId);
+            session.removeAttribute("cartId");
         }
         return "orderFinished";
     }
@@ -113,7 +115,7 @@ public class OrderController {
     public String requestCancelled(HttpServletRequest request ) {
         HttpSession session = request.getSession(false);
         if(session != null) {
-            session.invalidate();
+            session.removeAttribute("cartId");
         }
         return "orderCancelled";
     }
