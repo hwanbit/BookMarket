@@ -11,9 +11,14 @@ function removeFromCart(bookId, cartId) {
     setTimeout('location.reload()', 10);
 }
 
-function deleteCart(cartId) {
-    if (confirm("모든 도서를 장바구니에서 삭제하시겠습니까?")) {
-        document.deleteForm.submit();
+function clearCart(cartId) {
+    if (confirm("모든 도서를 장바구니에서 삭제할까요?") == true) {
+        document.clearForm.submit();
         setTimeout('location.reload()', 10);
     }
+}
+
+function deleteConfirm(id){
+    if (confirm("정말로 삭제할까요?") == true) location.href ="/BookMarket/books/delete?id="+id;
+    else  return;
 }

@@ -2,6 +2,7 @@ package kr.ac.kopo.sun.bookmarket.service;
 
 import jakarta.transaction.Transactional;
 import kr.ac.kopo.sun.bookmarket.domain.Member;
+import kr.ac.kopo.sun.bookmarket.domain.MemberFormDto;
 import kr.ac.kopo.sun.bookmarket.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -32,7 +33,7 @@ public class MemberService implements UserDetailsService {
         Member member = memberRepository.findByMemberId(memberId);
         memberRepository.deleteById(member.getNum());
     }
-    
+
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByMemberId(member.getMemberId());
         if (findMember != null) {

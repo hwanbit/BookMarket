@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import kr.ac.kopo.sun.bookmarket.domain.Member;
 import kr.ac.kopo.sun.bookmarket.domain.MemberFormDto;
 import kr.ac.kopo.sun.bookmarket.service.MemberService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -45,25 +44,26 @@ public class MemberController {
 
         return "redirect:/";
     }
+
     //     회원 수정 폼
     @GetMapping(value = "/update/{memberId}")
     public String requestUpdateMemberForm(@PathVariable(name = "memberId") String memberId, Model model) {
-        Member member  = memberService.getMemberByMemberId(memberId);
-        model.addAttribute("memberFormDto",member);
+        Member member = memberService.getMemberByMemberId(memberId);
+        model.addAttribute("memberFormDto", member);
         return "member/updateMember";
     }
 
-    //     회원 수정 기능 수행
+    //    회원 수정 기능 수행
     @PostMapping(value = "/update")
     public String submitUpdateMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors()) {
             return "member/updateMember";
         }
 
-        try {
+        try{
             Member member = Member.createMember(memberFormDto, passwordEncoder);
             memberService.saveMember(member);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "member/updateMember";
         }
